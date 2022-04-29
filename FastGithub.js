@@ -10,8 +10,8 @@
 // @include       *://github.com/*
 // @include       *://github*
 // @include       *://hub.fastgit.org/*
-// @require       https://cdn.staticfile.org/jquery/3.6.0/jquery.min.js
-// @version       1.6.4
+// @require       https://unpkg.zhimg.com/jquery@3.6.0/dist/jquery.js
+// @version       1.6.5
 // @run-at        document-end
 // ==/UserScript==
 
@@ -36,7 +36,7 @@
     "由cnpmjs.org提供",
   ];
   MirrorUrl[1] = [
-    "https://hub.fastgit.org",
+    "https://hub.fastgit.xyz",
     "FastGit",
     "由KevinZonda推动的FastGit项目，请仔细甄别",
   ];

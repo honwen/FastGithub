@@ -10,8 +10,9 @@
 // @include       *://github.com/*
 // @include       *://github*
 // @include       *://hub.fastgit.org/*
+// @include       *://hub.fastgit.xyz/*
 // @require       https://unpkg.zhimg.com/jquery@3.6.0/dist/jquery.js
-// @version       1.6.5
+// @version       1.6.6
 // @run-at        document-end
 // ==/UserScript==
 
@@ -94,6 +95,11 @@
     "CF加速 3",
     "每日10万次调用上限，由Ecalose提供",
   ];
+  MirrorUrl[16] = [
+    "https://raw-gh.gcdn.mirr.one",
+    "G-Core",
+    "俄罗斯 G-Core Labs CDN",
+  ];
   //添加对应索引即可使用
   var CloneSet = [1, 10];
   var MirrorSet = [1];
@@ -126,6 +132,7 @@
       RawSet.forEach((element) => {
         rawHtml(element, MirrorUrl[element][0] + href);
       });
+      rawHtml(16, MirrorUrl[16][0] + href.replace("/raw", ""));
       rawHtml(9, MirrorUrl[9][0] + href.replace("/raw/", "@"));
       rawHtml(12, MirrorUrl[12][0] + href.replace("/raw", ""));
 
@@ -171,31 +178,40 @@
   }
   /**
    * 添加Releases列表
+   * refer: https://github.com/XIU2/UserScript/blob/c2f4cdaf23ea8d3d2ae1e089fb6c1bcbe4f8956a/GithubEnhanced-High-Speed-Download.user.js#L151
    */
   function addReleasesList() {
-    $(".Box--condensed")
-      .find("[href]")
-      .each(function () {
-        var href = $(this).attr("href");
-        $(this)
-          .parent()
-          .after(`<div class="Box-body" >` + downloadHref(href) + `</div>`);
-        $(this).parent().removeClass("Box-body");
+    let html = document.querySelectorAll(".Box-footer");
+    if (html.length == 0) return;
+    let divDisplay = "margin-left: -90px;";
+    if (document.documentElement.clientWidth > 755) {
+      divDisplay = "margin-top: -3px;margin-left: 8px;display: inherit;";
+    } // 调整小屏幕时的样式
+    for (const current of html) {
+      if (current.querySelector(".XIU2-RS")) continue;
+      current.querySelectorAll("li.Box-row a").forEach(function (_this) {
+        _this.parentElement.nextElementSibling.insertAdjacentHTML(
+          "beforeend",
+          `<div class="XIU2-RS" style="${divDisplay}">` +
+            downloadHref(_this.href) +
+            "</div>"
+        );
 
         function downloadHref(href) {
           var span = "";
           DownloadSet.forEach((element) => {
             span += `<a class="flex-1 btn btn-outline get-repo-btn BtnGroup-item"
-                    style="float: none; border-color: var(--color-btn-outline-text);"
-                    rel="nofollow"
-                    href="${MirrorUrl[element][0] + href}"
-                    title="${MirrorUrl[element][2]}">${
+                        style="float: none; border-color: var(--color-btn-outline-text);"
+                        rel="nofollow"
+                        href="${MirrorUrl[element][0] + href}"
+                        title="${MirrorUrl[element][2]}">${
               MirrorUrl[element][1]
             }</a>`;
           });
           return span;
         }
       });
+    }
   }
   /**
    * 检测是否为PC端

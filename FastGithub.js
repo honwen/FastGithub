@@ -12,7 +12,7 @@
 // @include       *://hub.fastgit.org/*
 // @include       *://hub.fastgit.xyz/*
 // @require       https://unpkg.zhimg.com/jquery@3.6.0/dist/jquery.js
-// @version       1.6.6
+// @version       1.6.7
 // @run-at        document-end
 // ==/UserScript==
 
@@ -75,7 +75,12 @@
   ];
   MirrorUrl[10] = [
     "https://ghproxy.com/https://github.com",
-    "Ioiox",
+    "IOIOX.KR",
+    "CN2 GIA 线路",
+  ];
+  MirrorUrl[20] = [
+    "https://mirror.ghproxy.com/https://github.com",
+    "IOIOX.JP",
     "CN2 GIA 线路",
   ];
   MirrorUrl[11] = ["https://raw.fastgit.org", "FastGit", MirrorUrl[1][2]];
@@ -103,7 +108,7 @@
   //添加对应索引即可使用
   var CloneSet = [1, 10];
   var MirrorSet = [1];
-  var DownloadSet = [4, 10];
+  var DownloadSet = [4, 10, 20];
   var RawSet = [10];
 
   //其他
@@ -203,7 +208,10 @@
             span += `<a class="flex-1 btn btn-outline get-repo-btn BtnGroup-item"
                         style="float: none; border-color: var(--color-btn-outline-text);"
                         rel="nofollow"
-                        href="${MirrorUrl[element][0] + href}"
+                        href="${
+                          MirrorUrl[element][0] +
+                          href.replace("https://github.com", "")
+                        }"
                         title="${MirrorUrl[element][2]}">${
               MirrorUrl[element][1]
             }</a>`;

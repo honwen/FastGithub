@@ -12,7 +12,7 @@
 // @include       *://hub.fastgit.org/*
 // @include       *://hub.fastgit.xyz/*
 // @require       https://unpkg.zhimg.com/jquery@3.6.0/dist/jquery.js
-// @version       1.6.7
+// @version       1.6.8
 // @run-at        document-end
 // ==/UserScript==
 
@@ -109,7 +109,7 @@
   var CloneSet = [1, 10];
   var MirrorSet = [1];
   var DownloadSet = [4, 10, 20];
-  var RawSet = [10];
+  var RawSet = [10, 20];
 
   //其他
   var CloneList = addCloneList();
